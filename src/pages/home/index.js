@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -94,7 +95,8 @@ const Home = () => {
               <h5 className="card-title">
                 <i className="bi bi-person-circle"></i>
               </h5>
-              <p className="card-text font-size-12">Khách hàng</p>
+              <p className="card-text font-size-12">
+              <Link to={`/khach-hang`}>Khách hàng</Link></p>
             </div>
           </div>
         </div>
@@ -105,7 +107,9 @@ const Home = () => {
               <h5 className="card-title">
                 <i className="bi bi-box-fill"></i>
               </h5>
-              <p className="card-text font-size-12">Hàng hóa</p>
+              <p className="card-text font-size-12">
+                <Link to={`/hang-hoa`}>Hàng hóa</Link>
+              </p>
             </div>
           </div>
         </div>

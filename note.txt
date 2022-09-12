@@ -1,3 +1,11 @@
 --inventory: tồn kho
 --sold: đã bán
 --goods:hàng hóa
+
+custommer table:
++ id
++ name
++ email
++ address
++ phone_number
++ notes

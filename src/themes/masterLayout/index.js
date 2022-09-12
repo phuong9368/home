@@ -30,7 +30,7 @@ const MasterLayout = ({children}) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="#" className="nav-link">
+                <Link to="/khach-hang" className="nav-link">
                   Khách hàng
                 </Link>
               </li>
