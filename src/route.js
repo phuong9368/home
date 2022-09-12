@@ -1,7 +1,8 @@
 import { Route, Routes, HashRouter } from "react-router-dom";
 import Customer from "./pages/customer";
-import Goods from "./pages/goods";
 import Home from "./pages/home";
+import Product from "./pages/product";
+import ProductDetail from "./pages/product/productDetail";
 import MasterLayout from "./themes/masterLayout";
 
 const RoutesRoot = () => {
@@ -10,8 +11,9 @@ const RoutesRoot = () => {
       <MasterLayout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/hang-hoa" element={<Goods />} />
           <Route path="/khach-hang" element={<Customer />} />
+          <Route path="/hang-hoa" element={<Product />} />
+          <Route path="/hang-hoa/:id" element={<ProductDetail />} />
         </Routes>
       </MasterLayout>
     </HashRouter>

@@ -1,49 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import customerApi from "../../api/customerApi";
+import productApi from "../../api/productApi";
 
-const Customer = () => {
-  const [customers, setCustomers] = useState([]);
+const Product = () => {
+  const [products, setProducts] = useState([]);
   
-  const fetchCustomers = async () => {
-    const response = await customerApi.getAll();
+  const fetchProducts = async () => {
+    const response = await productApi.getAll();
     if (response?.status === "OK") {
-      setCustomers([]);
+      setProducts([]);
       if (response.data) {
         let data = response.data;
         data = data.filter((obj) => !obj.delFlg);
-        setCustomers(data);
+        setProducts(data);
       }
     }
     console.log(response);
   };
 
   useEffect(() => {
-    fetchCustomers();
+    fetchProducts();
   }, []);
   return (
     <>
       <div className="row">
         <div className="col-12 col-sm-12 col-md-6">
-          <b className="text-uppercase">Danh sách khách hàng</b>
+          <b className="text-uppercase">Danh sách hàng hóa</b>
           <table className="table table-hover table-bordered ">
             <thead>
               <tr>
                 <th scope="col">STT</th>
                 <th scope="col">Tên</th>
-                <th scope="col">SĐT</th>
-                <th scope="col">Địa chỉ</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Đã bán</th>
               </tr>
             </thead>
             <tbody>
-              {customers?.map((value, key) => (
+              {products?.map((value, key) => (
                 <tr key={key}>
                   <td>{key + 1}</td>
                   <td>
-                    <Link to={`/khach-hang/` + value.id}>{value.name}</Link>
+                    <Link to={`/hang-hoa/` + value.id}>{value.name}</Link>
                   </td>
-                  <td>{value.phoneNumber}</td>
-                  <td>{value.address}</td>
+                  <td>{value.wholesalePrice}</td>
+                  <td>{value.quantitySold}</td>
                 </tr>
               ))}
             </tbody>
@@ -54,4 +54,4 @@ const Customer = () => {
   );
 };
 
-export default Customer;
+export default Product;

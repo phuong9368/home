@@ -4,9 +4,11 @@
   "homepage": "https://phuong9368.github.io/home",
   "private": true,
   "dependencies": {
+    "alertifyjs": "^1.13.1",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
     "gh-pages": "^4.0.0",
+    "query-string": "^7.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
