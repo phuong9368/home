@@ -9,7 +9,7 @@ const MasterLayout = ({children}) => {
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand">
-           KAMI SHOP
+           {/* KAMI SHOP */}
           </Link>
           <button
             className="navbar-toggler"
@@ -30,8 +30,13 @@ const MasterLayout = ({children}) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/khach-hang" className="nav-link">
+                <Link to="/khach-hang" className="nav-link active">
                   Khách hàng
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/don-ban-hang" className="nav-link active">
+                  Đơn bán hàng
                 </Link>
               </li>
               <li className="nav-item dropdown">
@@ -47,7 +52,7 @@ const MasterLayout = ({children}) => {
                 </Link>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>
-                    <Link to="/home" className="dropdown-item">
+                    <Link to="/hang-hoa/them" className="dropdown-item">
                       Thêm hàng hóa
                     </Link>
                   </li>

@@ -9,3 +9,18 @@ custommer table:
 + address
 + phone_number
 + notes
+
+order:
++ id
++ Thời gian
++ Số lượng
++ Phụ phí (ship, thuế)
++ Giảm giá
++ Trạng thái
++ Hàng hóa
++ Khách hàng
+
+
+
+=> khi chọn hàng thì cộng dồn đã bán
++ 

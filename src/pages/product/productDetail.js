@@ -26,7 +26,6 @@ const ProductDetail = () => {
         if (!data.delFlg) {
           setProduct(data);
           setDataSend(data);
-          console.log(data)
         }
       }
     }
@@ -52,6 +51,7 @@ const ProductDetail = () => {
       window.$("#entry-price-modal").modal("hide");
       window.$("#wholesale-price-modal").modal("hide");
       window.$("#retail-price-modal").modal("hide");
+      window.$("#quantity-inventory-modal").modal("hide");
       window.$("#note-modal").modal("hide");
       alertify.success("Cập nhật dữ liệu thành công");
     }
@@ -138,14 +138,27 @@ const ProductDetail = () => {
                 </li>
                 <li className="list-group-item">
                   <div className="d-flex justify-content-between">
-                    <div className="bd-highlight">Đơn vị tính:</div>
+                    <div className="bd-highlight">Tồn kho:</div>
                     <div className="bd-highlight"></div>
                     <div className="bd-highlight">
                       <div className="d-flex justify-content-end">
                         <div className="bd-highlight"></div>
                         <div className="bd-highlight">
-                          {product.unit}
+                          {product.quantityInventory}
+                          <i className="bi bi-pencil-square ms-2 text-primary" data-bs-toggle="modal" data-bs-target="#quantity-inventory-modal"></i>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li className="list-group-item">
+                  <div className="d-flex justify-content-between">
+                    <div className="bd-highlight">Đơn vị tính:</div>
+                    <div className="bd-highlight"></div>
+                    <div className="bd-highlight">
+                      <div className="d-flex justify-content-end">
+                        <div className="bd-highlight"></div>
+                        <div className="bd-highlight">{product.unit}</div>
                       </div>
                     </div>
                   </div>
@@ -264,6 +277,35 @@ const ProductDetail = () => {
               </div>
             </div>
 
+            <div className="modal fade" id="quantity-inventory-modal" aria-labelledby="quantity-inventory-modal1" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="quantity-inventory-modal1">
+                      Chỉnh sửa tồn kho
+                    </h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body">
+                    <input
+                      type="number"
+                      className="form-control"
+                      onChange={handleChange("quantityInventory")}
+                      value={dataSend.quantityInventory || ""}
+                    />
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                      Đóng
+                    </button>
+                    <button type="button" className="btn btn-primary" onClick={() => saveProduct()}>
+                      Lưu
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="modal fade" id="note-modal" aria-labelledby="note-modal1" aria-hidden="true">
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
@@ -287,8 +329,6 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
-
-            
           </div>
         </div>
       </div>

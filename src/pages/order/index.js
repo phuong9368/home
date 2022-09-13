@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import productApi from "../../api/productApi";
 
-const Product = () => {
+const Order = () => {
   const [products, setProducts] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
 
@@ -12,7 +12,6 @@ const Product = () => {
       if (response.data) {
         let data = response.data;
         data = data.filter((obj) => !obj.delFlg);
-        // data = data.map((x) => x.wholesalePrice = formatCurrency(x.wholesalePrice))
         setProducts(data);
       }
     }
@@ -23,15 +22,33 @@ const Product = () => {
     fetchProducts();
   }, []);
 
-  const formatCurrency = (num) => {
-    let rs = "";
-    for (let i = num.length - 1, j = 1; i >= 0; i--, j++) {
-      rs = num[i] + rs;
-      if (j % 3 === 0 && i !== 0) {
-        rs = "," + rs;
-      }
+  const formatDate = () => {
+    let d = new Date(),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [day, month, year].join("/");
+  };
+
+  const formatHour = () => {
+    let d = new Date(),
+      h = d.getHours(),
+      m = d.getMinutes(),
+      s = d.getSeconds();
+      m = checkTime(m);
+      s = checkTime(s);
+    return [h, m, s].join(":");
+  };
+
+  const checkTime = (i) => {
+    if (i < 10) {
+      i = "0" + i;
     }
-    return rs;
+    return i;
   };
 
   return (
@@ -51,19 +68,25 @@ const Product = () => {
               <thead>
                 <tr>
                   <th scope="col">STT</th>
-                  <th scope="col">Tên</th>
                   <th scope="col">Giá</th>
-                  <th scope="col">Đã bán</th>
+                  <th scope="col">Ngày/Giờ</th>
+                  <th scope="col">Trạng thái</th>
                 </tr>
               </thead>
               <tbody>
                 {products?.map((value, key) => (
                   <tr key={key}>
-                    <td>{key + 1}</td>
                     <td>
-                      <Link to={`/hang-hoa/` + value.id}>{value.name}</Link>
+                      HD{key + 1}
+                      <br></br>
+                      <span className="form-text">Tên khách hàng</span>
                     </td>
-                    <td className="text-end">{value.wholesalePrice}</td>
+                    <td>{value.wholesalePrice}</td>
+                    <td className="text-end">
+                      {formatDate()}
+                      <br></br>
+                      <span className="form-text">{formatHour()}</span>
+                    </td>
                     <td className="text-end">{value.quantitySold}</td>
                   </tr>
                 ))}
@@ -76,4 +99,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Order;
