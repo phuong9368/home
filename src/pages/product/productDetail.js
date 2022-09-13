@@ -1,39 +1,56 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import productApi from "../../api/productApi";
+import alertify from 'alertifyjs';
 
 const ProductDetail = () => {
-  const [product, setProduct] = useState([]);
-  const [productName, setProductName] = useState("");
+  const [product, setProduct] = useState({});
+  const [dataSend, setDataSend] = useState({});
 
   let params = useParams();
 
+  const handleChange = (propertyName) => (event) => {
+    const newProduct = {
+      ...product,
+      [propertyName]: event.target.value,
+    };
+    setDataSend(newProduct);
+  };
+
   const fetchProducts = async (id) => {
     const response = await productApi.getById(id);
-    console.log(id);
     if (response?.status === "OK") {
-      setProduct([]);
       if (response.data) {
         let data = response.data;
-        if (data.delFlg) {
-          setProduct(null);
-          
-        } else {
+        if (!data.delFlg) {
           setProduct(data);
-          setProductName(data.name);
+          setDataSend(data);
         }
       }
     }
-    console.log(response);
   };
 
   useEffect(() => {
     fetchProducts(params.id);
   }, [params]);
 
-  const saveName = () => {
-    alert(product.name)
-  }
+  const saveProduct = async () => {
+    const response = await productApi.update(dataSend);
+    if (response?.status === "OK") {
+      setProduct([]);
+      if (response.data) {
+        let data = response.data;
+        if (data.delFlg) {
+          setProduct(null);
+        } else {
+          setProduct(data);
+          setDataSend(data);
+        }
+      }
+      window.$('#name-modal').modal('hide');
+      alertify.success("Cập nhật dữ liệu thành công");
+    }
+  };
 
   return (
     <>
@@ -41,8 +58,8 @@ const ProductDetail = () => {
         <div className="col-12 col-sm-12 col-md-4">
           <div className="text-center">
             <b className="text-uppercase ">
-              {product.name}{" "}
-              <i className="bi bi-pencil-square ms-2 text-primary" data-bs-toggle="modal" data-bs-target="#name"></i>
+              {product.name}
+              <i className="bi bi-pencil-square ms-2 text-primary" data-bs-toggle="modal" data-bs-target="#name-modal"></i>
             </b>
           </div>
 
@@ -127,8 +144,8 @@ const ProductDetail = () => {
             </ul>
           </div>
 
-          <div className="modal fade" id="name" aria-labelledby="name1" aria-hidden="true">
-            <div className="modal-dialog">
+          <div className="modal fade" id="name-modal" aria-labelledby="name1" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="name1">
@@ -137,13 +154,18 @@ const ProductDetail = () => {
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
-                    <input type="text" className="form-control" onChange={(e) => setProductName(e.target.value)}/>
+                  <input
+                    type="text"
+                    className="form-control"
+                    onChange={handleChange("name")}
+                    value={dataSend.name || ""}
+                  />
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                     Đóng
                   </button>
-                  <button type="button" className="btn btn-primary" onClick={() => saveName()}>
+                  <button type="button" className="btn btn-primary" onClick={() => saveProduct()}>
                     Lưu
                   </button>
                 </div>
@@ -151,7 +173,7 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          {/* <div className="modal fade" id="note" aria-labelledby="note1" aria-hidden="true">
+          <div className="modal fade" id="note" aria-labelledby="note1" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
@@ -160,18 +182,25 @@ const ProductDetail = () => {
                   </h5>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div className="modal-body">...</div>
+                <div className="modal-body">
+                  <input
+                    type="text"
+                    className="form-control"
+                    onChange={handleChange("note")}
+                    value={product.note || ""}
+                  />
+                </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                     Đóng
                   </button>
-                  <button type="button" className="btn btn-primary">
+                  <button type="button" className="btn btn-primary" onClick={() => saveProduct()}>
                     Lưu
                   </button>
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </>

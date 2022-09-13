@@ -4,7 +4,8 @@ import queryString from "query-string";
 
 const AxiosClient = axios.create({
   // baseURL: process.env.REACT_APP_API_URL,
-  baseURL: 'http://localhost:8081/api/v1',
+  baseURL: 'https://learning-spring-boot-api.herokuapp.com/api/v1/',
+  // baseURL: 'http://localhost:8081/api/v1',
   headers: {
     "content-type": "application/json",
   },
