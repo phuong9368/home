@@ -62,7 +62,7 @@ const MasterLayout = ({children}) => {
           </div>
         </div>
       </nav>
-      <div className="container-fluid mt-3">{children}</div>
+      <div className="mt-3">{children}</div>
     </>
   );
 };
